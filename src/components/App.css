@@ -1,0 +1,33 @@
+body {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f3f3;
+}
+body .hidden {
+  display: none;
+}
+main {
+  margin: 90px 10px 10px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 5em;
+}
+#loader {
+  text-align: center;
+}
+@media only screen and (max-width: 800px) {
+  main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (max-width: 768px) {
+  main {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+p.label-match-begins {
+  font-size: 14px;
+  font-weight: 500;
+  color: #616161;
+}

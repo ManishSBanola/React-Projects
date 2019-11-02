@@ -1,0 +1,28 @@
+header.app-header .grid-header {
+  display: grid;
+  grid-template-columns: 61px 1fr 1fr;
+}
+header.app-header .list-header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.8rem;
+}
+header.app-header .list-header a {
+  cursor: pointer;
+  color: #abadc7;
+}
+header.app-header .list-header a:hover {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+header.app-header .list-header .icon-align {
+  display: grid;
+  grid-template-columns: 0.2fr 1fr;
+  grid-gap: 0.4rem;
+  align-items: center;
+}
+p.h7,
+.app-header li.h7 {
+  font-size: 1rem;
+}
