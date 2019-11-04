@@ -16,16 +16,6 @@ main {
 #loader {
   text-align: center;
 }
-@media only screen and (max-width: 800px) {
-  main {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media only screen and (max-width: 768px) {
-  main {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
 p.label-match-begins {
   font-size: 14px;
   font-weight: 500;

@@ -1,4 +1,3 @@
-import Actions from "../Actions/index";
 import { FETCH_SCORE } from "../Actions/types";
 
 export default (state = {}, Actions) => {

@@ -9,20 +9,22 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import MenuItem from "@material-ui/core/MenuItem";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-
 import Loader from "../loader";
 import "./NewMatches.scss";
 
 var clear; /*to clear timeInterval for fetchscore api*/
 class NewMatches extends React.Component {
+  searchTeamFilter = ({ games }) => {
+    return games.filter(game => {
+      const matchHeading = `${game["team-1"]} vs ${game["team-2"]}`;
+      return (
+        matchHeading
+          .toLowerCase()
+          .indexOf(this.props.searchKey.toLowerCase()) !== -1
+      );
+    });
+  };
   getMatchStartTime = unFormatedTime => {
-    debugger;
     const dateObj = new Date(unFormatedTime);
     const localTime = dateObj.toLocaleTimeString();
     const getHours = localTime.substr(0, 4);
@@ -54,8 +56,9 @@ class NewMatches extends React.Component {
     return "";
   };
 
-  groupMatchesByDate = () => {
-    const groups = this.props.Newmatches.matches.reduce((groups, game) => {
+  groupMatchesByDate = ({ newMatches }) => {
+    const { matches } = newMatches;
+    const groups = matches.reduce((groups, game) => {
       const date = game.date.split("T")[0];
       if (!groups[date]) {
         groups[date] = [];
@@ -102,21 +105,28 @@ class NewMatches extends React.Component {
       months[Number(temp_date[1]) - 1]
     } ${temp_date[0]}`;
   };
+
   render() {
-    console.log(this.props);
-    if (this.props.Newmatches.matches) {
-      return this.groupMatchesByDate().map(match => {
+    const { newMatches } = this.props;
+    const { matches } = newMatches;
+
+    if (matches) {
+      return this.groupMatchesByDate(this.props).map(match => {
         return (
-          <div className="parent-score-card">
+          <div
+            className={
+              !this.searchTeamFilter(match).length > 0
+                ? "hidden"
+                : "parent-score-card"
+            }
+            key={match.date}
+          >
             <Typography variant="h6" component="h3" align="center">
               {this.getDateInWords(match.date)}
             </Typography>
-            {match.games.map(match => {
+            {this.searchTeamFilter(match).map(match => {
               return (
                 <Card key={match["unique_id"]}>
-                  <CardActionArea>
-                    <CardMedia image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg" />
-                  </CardActionArea>
                   <CardContent>
                     <Typography
                       align="center"
@@ -185,9 +195,7 @@ class NewMatches extends React.Component {
 }
 
 const mapStateToProps = state => {
-  debugger;
-  console.log(state, "state");
-  return { Newmatches: state.NewMatches, matchScore: state.score };
+  return { newMatches: state.NewMatches, matchScore: state.score };
 };
 
 export default connect(

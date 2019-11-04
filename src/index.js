@@ -5,8 +5,8 @@ import { Provider } from "react-redux";
 import combineReducer from "./Reducers";
 
 import reduxThunk from "redux-thunk";
-import { applyMiddleware, compose, combineReducers, createStore } from "redux";
-const composeEnhancers = window._REDUX_DEVTOOLS_EXTENSION_COMPOSE_ || compose;
+import { applyMiddleware, compose, createStore } from "redux";
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   combineReducer,

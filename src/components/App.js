@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header/header";
 import history from "./history";
 import { Route, Router } from "react-router-dom";
-import NewMatches from "./NewMatches/NewMatches";
+import Search from "./Search/Search";
 import "././App.scss";
 const App = () => {
   return (
@@ -10,7 +10,7 @@ const App = () => {
       <Router history={history}>
         <Header />
         <main>
-          <Route path="/" exact component={NewMatches} />
+          <Route path="/" exact component={Search} />
         </main>
       </Router>
     </div>
