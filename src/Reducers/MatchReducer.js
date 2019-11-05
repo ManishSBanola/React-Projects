@@ -1,4 +1,4 @@
-import { FETCH_NEW_MATCHES, FETCH_SCORE } from "../Actions/types";
+import { FETCH_NEW_MATCHES, FETCH_SCORE, SEARCH_MATCH } from "../Actions/types";
 export default (state = {}, Actions) => {
   switch (Actions.type) {
     case FETCH_NEW_MATCHES:
@@ -6,6 +6,7 @@ export default (state = {}, Actions) => {
 
     case FETCH_SCORE:
       return { ...state, ...Actions.payload };
+
     default:
       return state;
   }

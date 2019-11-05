@@ -1,0 +1,33 @@
+$search-primary-color: #abadc7;
+
+fieldset.MuiOutlinedInput-notchedOutline {
+    border-color: $search-primary-color;
+}
+
+div {
+    &.MuiFormControl-marginNormal {
+        margin: 0;
+    }
+
+    &.MuiOutlinedInput-root {
+
+        &:hover,
+        &.Mui-focused {
+            .MuiOutlinedInput-notchedOutline {
+                border-color: #fff;
+            }
+        }
+    }
+}
+
+label.MuiInputLabel-outlined {
+    color: $search-primary-color;
+
+    &.Mui-focused {
+        color: #fff;
+    }
+}
+
+input.MuiOutlinedInput-input {
+    color: $search-primary-color;
+}

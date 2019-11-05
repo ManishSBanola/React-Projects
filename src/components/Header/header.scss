@@ -6,9 +6,12 @@ header.app-header {
     }
 
     .list-header {
+        li {
+            justify-content: flex-end;
+        }
 
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         grid-gap: 0.8rem;
 
         a {
@@ -35,5 +38,14 @@ p,
 .app-header li {
     &.h7 {
         font-size: 1rem;
+    }
+}
+
+.MuiPaper-root {
+    &.container-bg {
+        background-color: transparent;
+        box-shadow: none;
+        text-align: right;
+
     }
 }

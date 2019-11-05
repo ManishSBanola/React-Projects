@@ -4,8 +4,11 @@ header.app-header .grid-header {
 }
 header.app-header .list-header {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 0.8rem;
+}
+header.app-header .list-header li {
+  justify-content: flex-end;
 }
 header.app-header .list-header a {
   cursor: pointer;
@@ -25,4 +28,9 @@ header.app-header .list-header .icon-align {
 p.h7,
 .app-header li.h7 {
   font-size: 1rem;
+}
+.MuiPaper-root.container-bg {
+  background-color: transparent;
+  box-shadow: none;
+  text-align: right;
 }

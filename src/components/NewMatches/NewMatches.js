@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import { connect } from "react-redux";
 import { fetchNewMatches } from "../../Actions/index";
 import { fetchScore } from "../../Actions/index";
@@ -11,7 +11,9 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Loader from "../loader";
 import "./NewMatches.scss";
-
+import { searchMatch } from "../../Actions/index";
+import TypographyHeading from "../TypographyHeading";
+//const TypographyHeading = lazy(() => import("../TypographyHeading"));
 var clear; /*to clear timeInterval for fetchscore api*/
 class NewMatches extends React.Component {
   searchTeamFilter = ({ games }) => {
@@ -43,7 +45,11 @@ class NewMatches extends React.Component {
     clearInterval(clear);
   }
   isLiveScoreBtnClicked = CardMatchId => {
-    if (this.props.matchScore.matchId == CardMatchId) {
+    debugger;
+    if (
+      this.props.matchScore.matchId == CardMatchId &&
+      this.props.matchScore.score
+    ) {
       return this.props.matchScore.score;
     }
     return "";
@@ -111,80 +117,87 @@ class NewMatches extends React.Component {
     const { matches } = newMatches;
 
     if (matches) {
-      return this.groupMatchesByDate(this.props).map(match => {
-        return (
-          <div
-            className={
-              !this.searchTeamFilter(match).length > 0
-                ? "hidden"
-                : "parent-score-card"
-            }
-            key={match.date}
-          >
-            <Typography variant="h6" component="h3" align="center">
-              {this.getDateInWords(match.date)}
-            </Typography>
-            {this.searchTeamFilter(match).map(match => {
-              return (
-                <Card key={match["unique_id"]}>
-                  <CardContent>
-                    <Typography
-                      align="center"
-                      color="textSecondary"
-                      gutterBottom
-                      variant="h5"
-                      component="h2"
-                    >
-                      {match["team-1"] + " vs " + match["team-2"]}
-                    </Typography>
-                    <Typography
-                      color="textSecondary"
-                      align="center"
-                      gutterBottom
-                      variant="h6"
-                      component="p"
-                    >
-                      {this.isLiveScoreBtnClicked(match["unique_id"])}
-                    </Typography>
-                    <Typography
-                      align="center"
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      {this.getTossWinner(match["toss_winner_team"])}
-                    </Typography>
-                    <Typography
-                      align="center"
-                      className={
-                        match["matchStarted"] ? "hidden" : "label-match-begins"
-                      }
-                    >
-                      {this.getMatchStartTime(match["dateTimeGMT"])}
-                    </Typography>
-                  </CardContent>
-                  <CardActions
-                    className={!match["matchStarted"] ? "hidden" : ""}
-                  >
-                    <Button
-                      onClick={() => {
-                        this.getLiveScore(match["unique_id"]);
-                      }}
-                      size="small"
-                      color="primary"
-                    >
-                      Live Score
-                    </Button>
-                    <Button size="small" color="primary">
-                      Match Details
-                    </Button>
-                  </CardActions>
-                </Card>
-              );
-            })}
-          </div>
-        );
-      });
+      debugger;
+      return (
+        <div className="match-grid-container">
+          {this.groupMatchesByDate(this.props).map(match => {
+            if (!this.searchTeamFilter(match).length) return null;
+            debugger;
+            return (
+              <div className="parent-score-card" key={match.date}>
+                <Typography variant="h6" component="h3" align="center">
+                  {this.getDateInWords(match.date)}
+                </Typography>
+                {this.searchTeamFilter(match).map(match => {
+                  return (
+                    <Card key={match["unique_id"]}>
+                      <CardContent>
+                        <TypographyHeading
+                          align="center"
+                          color="textSecondary"
+                          gutterBottom
+                          variant="h5"
+                          component="h2"
+                          value={match["team-1"] + " vs " + match["team-2"]}
+                        />
+                        {/* <Suspense fallback={<div>loading....</div>}> */}
+                        <TypographyHeading
+                          align="center"
+                          color="textSecondary"
+                          gutterBottom
+                          variant="h6"
+                          component="p"
+                          value={this.isLiveScoreBtnClicked(match["unique_id"])}
+                        />
+                        {/* </Suspense> */}
+
+                        <TypographyHeading
+                          align="center"
+                          variant="body2"
+                          color="textSecondary"
+                          component="p"
+                          value={this.getTossWinner(match["toss_winner_team"])}
+                        />
+
+                        <TypographyHeading
+                          align="center"
+                          className={
+                            match["matchStarted"]
+                              ? "hidden"
+                              : "label-match-begins"
+                          }
+                          value={this.getMatchStartTime(match["dateTimeGMT"])}
+                        />
+                      </CardContent>
+
+                      <CardActions
+                        className={
+                          !match["matchStarted"] || !match["toss_winner_team"]
+                            ? "hidden"
+                            : ""
+                        }
+                      >
+                        <Button
+                          onClick={() => {
+                            this.getLiveScore(match["unique_id"]);
+                          }}
+                          size="small"
+                          color="primary"
+                        >
+                          Live Score
+                        </Button>
+                        <Button size="small" color="primary">
+                          Match Details
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      );
     } else {
       return <Loader />;
     }
@@ -195,10 +208,14 @@ class NewMatches extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { newMatches: state.NewMatches, matchScore: state.score };
+  return {
+    newMatches: state.NewMatches,
+    matchScore: state.score,
+    searchKey: state.searchKey
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchNewMatches, fetchScore }
+  { fetchNewMatches, fetchScore, searchMatch }
 )(NewMatches);

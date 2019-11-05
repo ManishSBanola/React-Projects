@@ -1,0 +1,19 @@
+fieldset.MuiOutlinedInput-notchedOutline {
+  border-color: #abadc7;
+}
+div.MuiFormControl-marginNormal {
+  margin: 0;
+}
+div.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+div.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #fff;
+}
+label.MuiInputLabel-outlined {
+  color: #abadc7;
+}
+label.MuiInputLabel-outlined.Mui-focused {
+  color: #fff;
+}
+input.MuiOutlinedInput-input {
+  color: #abadc7;
+}
