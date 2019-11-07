@@ -4,6 +4,7 @@ import history from "./history";
 import { Route, Router } from "react-router-dom";
 import NewMatches from "./NewMatches/NewMatches";
 import "././App.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 const App = () => {
   return (
     <div>

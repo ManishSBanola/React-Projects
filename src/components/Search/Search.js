@@ -9,7 +9,6 @@ class Search extends React.Component {
     this.props.searchMatch(event.target.value);
   };
   componentDidMount() {
-    debugger;
     this.props.searchMatch();
   }
   render() {
@@ -28,7 +27,6 @@ class Search extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  debugger;
   return state;
 };
 
