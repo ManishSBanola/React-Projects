@@ -1,10 +1,10 @@
 header.app-header .grid-header {
   display: grid;
-  grid-template-columns: 61px 1fr 1fr;
+  grid-template-columns: 61px 0.7fr 1fr;
 }
 header.app-header .list-header {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 0.8rem;
 }
 header.app-header .list-header li {
@@ -33,4 +33,18 @@ p.h7,
   background-color: transparent;
   box-shadow: none;
   text-align: right;
+}
+.input-search-type .MuiFormLabel-root,
+.input-search-type .MuiSelect-selectMenu {
+  color: #abadc7;
+}
+.input-search-type .MuiFormLabel-root.Mui-focused,
+.input-search-type .MuiSelect-selectMenu.Mui-focused {
+  color: #abadc7;
+}
+.input-search-type .MuiFilledInput-underline:before {
+  border-color: #abadc7;
+}
+.input-search-type .MuiSelect-icon {
+  color: #abadc7;
 }

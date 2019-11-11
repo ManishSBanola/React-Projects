@@ -7,6 +7,7 @@ fieldset.MuiOutlinedInput-notchedOutline {
 div {
     &.MuiFormControl-marginNormal {
         margin: 0;
+        width: 100%;
     }
 
     &.MuiOutlinedInput-root {
@@ -30,4 +31,47 @@ label.MuiInputLabel-outlined {
 
 input.MuiOutlinedInput-input {
     color: $search-primary-color;
+}
+
+
+//auto suggest styles
+
+.no-suggestions {
+    color: #999;
+    padding: 0.5rem;
+}
+
+.suggestion-active {
+    background-color: #008f68;
+    color: #fae042;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.suggestions {
+    border: 1px solid #999;
+    border-top-width: 0;
+    list-style: none;
+    margin-top: 0;
+    max-height: 143px;
+    overflow-y: auto;
+    padding-left: 0;
+    width: calc(201px + 1rem);
+    position: absolute;
+
+    li {
+        text-align: left;
+        padding: 0.5rem;
+
+        &:hover {
+            background-color: #008f68;
+            color: #fae042;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        &:not(:last-of-type) {
+            border-bottom: 1px solid #999;
+        }
+    }
 }

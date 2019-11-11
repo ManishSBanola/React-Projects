@@ -4,7 +4,9 @@ import {
   FETCH_SCORE,
   FETCH_PLAYER_ID,
   FETCH_PLAYER_STATS,
-  SEARCH_MATCH
+  SEARCH_MATCH,
+  DARK_MODE,
+  FETCH_PLAYER_NAME
 } from "./types";
 import cricketApi from "../api";
 
@@ -27,4 +29,20 @@ export const searchMatch = (searchKey = "") => {
     type: SEARCH_MATCH,
     payload: searchKey
   };
+};
+export const toggleDarkMode = value => {
+  return {
+    type: DARK_MODE,
+    payload: { dark: value }
+  };
+};
+export const getPlayerByName = playerName => async (dispatch, getState) => {
+  const response = await cricketApi.get(
+    `playerFinder?apikey=${process.env.REACT_APP_CRICKET_API_KEY}&name=${playerName}`
+  );
+
+  dispatch({
+    type: FETCH_PLAYER_NAME,
+    payload: { playerName: response.data.data }
+  });
 };

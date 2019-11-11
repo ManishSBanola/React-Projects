@@ -4,3 +4,5 @@ export const FETCH_SCORE = "FETCH_SCORE";
 export const FETCH_PLAYER_ID = "FETCH_PLAYER_ID";
 export const FETCH_PLAYER_STATS = "FETCH_PLAYER_STATS";
 export const SEARCH_MATCH = "SEARCH_MATCH";
+export const DARK_MODE = "DARK_MODE";
+export const FETCH_PLAYER_NAME = "FETCH_PLAYER_NAME";

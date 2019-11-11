@@ -14,10 +14,25 @@ import "./NewMatches.scss";
 import { searchMatch } from "../../Actions/index";
 import TypographyHeading from "../TypographyHeading";
 import Pagination from "../Pagination/Pagination";
+import PaginationAdvance from "../PaginationAdvance/PaginationAdvance";
+
 //const TypographyHeading = lazy(() => import("../TypographyHeading"));
 var clear; /*to clear timeInterval for fetchscore api*/
 class NewMatches extends React.Component {
-  state = { currentPage: 1, matchesPerPage: 2 };
+  state = {
+    currentPage: 1,
+    matchesPerPage: 2
+  };
+
+  onPageChanged = data => {
+    debugger;
+    const { currentPage, totalPages, pageLimit } = data;
+
+    this.firstIndex = (currentPage - 1) * pageLimit;
+    this.lastIndex = this.firstIndex + pageLimit;
+    this.setState({ currentPage, totalPages });
+  };
+
   recordsPerPage = value => {
     this.setState({ matchesPerPage: value });
   };
@@ -134,101 +149,93 @@ class NewMatches extends React.Component {
       console.log(filteredTotalMatches);
       return (
         <div className="match-grid-container">
-          {!filteredTotalMatches.length > 0 ? (
-            <div id={"manish"}>No record</div>
-          ) : (
-            filteredTotalMatches
-              .slice(firstMatchIndex, lastMatchIndex)
-              .map(match => {
-                if (!this.searchTeamFilter(match).length) return null;
+          {filteredTotalMatches
+            .slice(this.firstIndex, this.lastIndex)
+            .map(match => {
+              if (!this.searchTeamFilter(match).length) return null;
 
-                return (
-                  <div className="parent-score-card" key={match.date}>
-                    <Typography variant="h6" component="h3" align="center">
-                      {this.getDateInWords(match.date)}
-                    </Typography>
-                    {this.searchTeamFilter(match).map(match => {
-                      return (
-                        <Card key={match["unique_id"]}>
-                          <CardContent>
+              return (
+                <div className="parent-score-card" key={match.date}>
+                  <Typography variant="h6" component="h3" align="center">
+                    {this.getDateInWords(match.date)}
+                  </Typography>
+                  {this.searchTeamFilter(match).map(match => {
+                    return (
+                      <Card key={match["unique_id"]}>
+                        <CardContent>
+                          <TypographyHeading
+                            align="center"
+                            color="textSecondary"
+                            gutterBottom
+                            variant="h5"
+                            component="h2"
+                            value={match["team-1"] + " vs " + match["team-2"]}
+                          />
+                          <Suspense fallback={<div>loading....</div>}>
                             <TypographyHeading
                               align="center"
                               color="textSecondary"
                               gutterBottom
-                              variant="h5"
-                              component="h2"
-                              value={match["team-1"] + " vs " + match["team-2"]}
-                            />
-                            <Suspense fallback={<div>loading....</div>}>
-                              <TypographyHeading
-                                align="center"
-                                color="textSecondary"
-                                gutterBottom
-                                variant="h6"
-                                component="p"
-                                value={this.isLiveScoreBtnClicked(
-                                  match["unique_id"]
-                                )}
-                              />
-                            </Suspense>
-
-                            <TypographyHeading
-                              align="center"
-                              variant="body2"
-                              color="textSecondary"
+                              variant="h6"
                               component="p"
-                              value={this.getTossWinner(
-                                match["toss_winner_team"]
+                              value={this.isLiveScoreBtnClicked(
+                                match["unique_id"]
                               )}
                             />
+                          </Suspense>
 
-                            <TypographyHeading
-                              align="center"
-                              className={
-                                match["matchStarted"]
-                                  ? "hidden"
-                                  : "label-match-begins"
-                              }
-                              value={this.getMatchStartTime(
-                                match["dateTimeGMT"]
-                              )}
-                            />
-                          </CardContent>
+                          <TypographyHeading
+                            align="center"
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                            value={this.getTossWinner(
+                              match["toss_winner_team"]
+                            )}
+                          />
 
-                          <CardActions
+                          <TypographyHeading
+                            align="center"
                             className={
-                              !match["matchStarted"] ||
-                              !match["toss_winner_team"]
+                              match["matchStarted"]
                                 ? "hidden"
-                                : ""
+                                : "label-match-begins"
                             }
+                            value={this.getMatchStartTime(match["dateTimeGMT"])}
+                          />
+                        </CardContent>
+
+                        <CardActions
+                          className={
+                            !match["matchStarted"] || !match["toss_winner_team"]
+                              ? "hidden"
+                              : ""
+                          }
+                        >
+                          <Button
+                            onClick={() => {
+                              this.getLiveScore(match["unique_id"]);
+                            }}
+                            size="small"
+                            color="primary"
                           >
-                            <Button
-                              onClick={() => {
-                                this.getLiveScore(match["unique_id"]);
-                              }}
-                              size="small"
-                              color="primary"
-                            >
-                              Live Score
-                            </Button>
-                            <Button size="small" color="primary">
-                              Match Details
-                            </Button>
-                          </CardActions>
-                        </Card>
-                      );
-                    })}
-                  </div>
-                );
-              })
-          )}
-          <Pagination
-            totalMatches={totalMatches.length}
-            matchesPerPage={this.state.matchesPerPage}
-            navigateToClickedPage={this.navigateToClickedPage}
-            recordsPerPage={this.recordsPerPage}
-            currentPage={this.state.currentPage}
+                            Live Score
+                          </Button>
+                          <Button size="small" color="primary">
+                            Match Details
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          <PaginationAdvance
+            totalRecords={totalMatches.length}
+            pageLimit={this.state.matchesPerPage}
+            pageNeighbours={1}
+            onPageChanged={this.onPageChanged}
           />
         </div>
       );

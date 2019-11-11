@@ -1,7 +1,9 @@
 header.app-header {
+    //  background: -webkit-linear-gradient(0deg, #1edcfb, #e50212, #c0069c);
+
     .grid-header {
         display: grid;
-        grid-template-columns: 61px 1fr 1fr;
+        grid-template-columns: 61px 0.7fr 1fr;
 
     }
 
@@ -11,7 +13,7 @@ header.app-header {
         }
 
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         grid-gap: 0.8rem;
 
         a {
@@ -47,5 +49,27 @@ p,
         box-shadow: none;
         text-align: right;
 
+    }
+}
+
+.input-search-type {
+
+    .MuiFormLabel-root,
+    .MuiSelect-selectMenu {
+        &.Mui-focused {
+            color: #abadc7;
+        }
+
+        color: #abadc7;
+    }
+
+    .MuiFilledInput-underline {
+        &:before {
+            border-color: #abadc7;
+        }
+    }
+
+    .MuiSelect-icon {
+        color: #abadc7;
     }
 }

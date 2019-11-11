@@ -12,8 +12,11 @@ body .hidden {
   grid-template-columns: repeat(1, 1fr);
   grid-gap: 5em;
 }
-main {
-  margin: 90px 10px 10px;
+.app-container.MuiPaper-elevation2 {
+  margin: 72px 0 0;
+  padding: 20px 52px;
+  border-radius: 0;
+  box-shadow: none;
 }
 #loader {
   text-align: center;
@@ -21,5 +24,4 @@ main {
 p.label-match-begins {
   font-size: 14px;
   font-weight: 500;
-  color: #616161;
 }
