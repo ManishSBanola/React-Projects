@@ -2,14 +2,26 @@ import NewMatches from "../NewMatches/NewMatches";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
-import { searchMatch, getPlayerByName } from "../../Actions/index";
+import {
+  searchMatch,
+  getPlayerByName,
+  fetchPlayerInfo
+} from "../../Actions/index";
 import "./Search.scss";
+import { Link } from "react-router-dom";
+import history from "../history";
+import DesignDialog from "../Dialog/DesignDialog";
+
 class Search extends React.Component {
+  setDialogState = () => {
+    this.setState({ openDialog: false });
+  };
   state = {
     activeSuggestionIndex: 0,
     filteredSuggestions: [],
     showSuggestions: false,
-    userInput: ""
+    userInput: "",
+    openDialog: false
   };
 
   updateSearch = event => {
@@ -29,11 +41,15 @@ class Search extends React.Component {
     });
   };
   componentDidUpdate(previousProps) {
-    const { playerName } = this.props.NewMatches;
-
+    const { playerName, playerInfo } = this.props.NewMatches;
+    if (playerInfo != previousProps.NewMatches.playerInfo) {
+      this.setState({
+        openDialog: true
+      });
+    }
     if (playerName) {
       var filteredSuggestions = playerName.map(player => {
-        return player.fullName;
+        return { pid: player.pid, playerName: player.name };
       });
     }
     if (playerName != previousProps.NewMatches.playerName) {
@@ -44,13 +60,15 @@ class Search extends React.Component {
       });
     }
   }
-  onClick = e => {
+  onClick = (e, pid) => {
     this.setState({
       activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
       userInput: e.currentTarget.innerText
     });
+
+    this.props.fetchPlayerInfo(pid);
   };
 
   onKeyDown = e => {
@@ -91,6 +109,7 @@ class Search extends React.Component {
     }
   };
   render() {
+    console.log(this.props, "props");
     const {
       onChange,
       onClick,
@@ -116,8 +135,12 @@ class Search extends React.Component {
               }
 
               return (
-                <li className={className} key={suggestion} onClick={onClick}>
-                  {suggestion}
+                <li
+                  className={className}
+                  key={suggestion.pid}
+                  onClick={e => onClick(e, suggestion.pid)}
+                >
+                  {suggestion.playerName}
                 </li>
               );
             })}
@@ -135,6 +158,7 @@ class Search extends React.Component {
     const isTeamSearch = this.props.searchType == "team";
 
     const { SearchInputProps, enableAutoSuggest, resetValue } = this.props;
+    const { playerInfo } = this.props.NewMatches;
 
     return (
       <React.Fragment>
@@ -146,8 +170,14 @@ class Search extends React.Component {
           label={SearchInputProps.label}
           margin="normal"
           variant="outlined"
+          autoComplete="off"
         />
         {enableAutoSuggest ? suggestionsListComponent : null}
+        <DesignDialog
+          openDialog={this.state.openDialog}
+          playerInfo={playerInfo}
+          updateParentDialogState={this.setDialogState}
+        />
       </React.Fragment>
     );
   }
@@ -156,7 +186,8 @@ const mapStateToProps = state => {
   return state;
 };
 
-export default connect(
-  mapStateToProps,
-  { searchMatch, getPlayerByName }
-)(Search);
+export default connect(mapStateToProps, {
+  searchMatch,
+  getPlayerByName,
+  fetchPlayerInfo
+})(Search);

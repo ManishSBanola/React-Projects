@@ -96,6 +96,9 @@ class header extends React.Component {
               </FormControl>
             </ListItem>
             <ListItem>
+              <label>
+                {this.props.darkMode ? `Dark Mode ON` : `Light Mode ON`}
+              </label>
               <Switch
                 checked={this.props.darkMode || false}
                 onChange={this.toggleDarkTheme}

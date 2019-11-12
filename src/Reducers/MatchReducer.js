@@ -3,7 +3,8 @@ import {
   FETCH_SCORE,
   SEARCH_MATCH,
   DARK_MODE,
-  FETCH_PLAYER_NAME
+  FETCH_PLAYER_NAME,
+  FETCH_PLAYER_INFO
 } from "../Actions/types";
 export default (state = {}, Actions) => {
   switch (Actions.type) {
@@ -16,6 +17,8 @@ export default (state = {}, Actions) => {
     case DARK_MODE:
       return { ...state, ...Actions.payload };
     case FETCH_PLAYER_NAME:
+      return { ...state, ...Actions.payload };
+    case FETCH_PLAYER_INFO:
       return { ...state, ...Actions.payload };
     default:
       return state;

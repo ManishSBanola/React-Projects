@@ -6,7 +6,8 @@ import {
   FETCH_PLAYER_STATS,
   SEARCH_MATCH,
   DARK_MODE,
-  FETCH_PLAYER_NAME
+  FETCH_PLAYER_NAME,
+  FETCH_PLAYER_INFO
 } from "./types";
 import cricketApi from "../api";
 
@@ -44,5 +45,16 @@ export const getPlayerByName = playerName => async (dispatch, getState) => {
   dispatch({
     type: FETCH_PLAYER_NAME,
     payload: { playerName: response.data.data }
+  });
+};
+
+export const fetchPlayerInfo = pid => async (dispatch, state) => {
+  const response = await cricketApi.get(
+    `playerStats?apikey=${process.env.REACT_APP_CRICKET_API_KEY}&pid=${pid}`
+  );
+
+  dispatch({
+    type: FETCH_PLAYER_INFO,
+    payload: { playerInfo: response.data }
   });
 };
