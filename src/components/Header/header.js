@@ -33,7 +33,6 @@ const Header = props => {
   const [toggleHeaderList, setToggleHeaderList] = useState(matches);
 
   const toggleHeader = () => {
-    console.log("toggle");
     setToggleHeaderList(!toggleHeaderList);
   };
   const resetSearchValue = () => {
