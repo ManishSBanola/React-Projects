@@ -3,7 +3,8 @@ import Header from "./Header/header";
 import history from "./history";
 import { Route, Router } from "react-router-dom";
 import NewMatches from "./NewMatches/NewMatches";
-
+import MatchDetails from "./MatchDetails/MatchDetails";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import "././App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Paper from "@material-ui/core/Paper";
@@ -38,19 +39,25 @@ const theme = createMuiTheme({
   palette: {
     type: "dark",
     primary: { main: grey[800] },
-
-    transition: " all 0.25s linear"
+    secondary: { main: "#6270bf" },
+    transition: " all 0.25s linear",
+    background: {
+      default: "#2b2a2a"
+    }
   }
 });
 
 const App = props => {
+  console.log(theme, "theme");
   return (
     <ThemeProvider theme={props.darkMode ? theme : null}>
+      <CssBaseline />
       <div>
         <Router history={history}>
           <Header />
           <Paper elevation="2" className="app-container">
             <Route path="/" exact component={NewMatches} />
+            <Route path="/MatchDetails/:id" exact component={MatchDetails} />
           </Paper>
         </Router>
       </div>

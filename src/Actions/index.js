@@ -7,7 +7,8 @@ import {
   SEARCH_MATCH,
   DARK_MODE,
   FETCH_PLAYER_NAME,
-  FETCH_PLAYER_INFO
+  FETCH_PLAYER_INFO,
+  FETCH_MATCH_DETAILS
 } from "./types";
 import cricketApi from "../api";
 
@@ -57,4 +58,11 @@ export const fetchPlayerInfo = pid => async (dispatch, state) => {
     type: FETCH_PLAYER_INFO,
     payload: { playerInfo: response.data }
   });
+};
+
+export const fetchMatchDetails = matchId => async (dispatch, state) => {
+  const response = await cricketApi.get(
+    `fantasySummary?apikey=${process.env.REACT_APP_CRICKET_API_KEY}&unique_id=${matchId}`
+  );
+  dispatch({ type: FETCH_MATCH_DETAILS, payload: response.data });
 };

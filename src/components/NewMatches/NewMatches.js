@@ -15,13 +15,21 @@ import { searchMatch } from "../../Actions/index";
 import TypographyHeading from "../TypographyHeading";
 import Pagination from "../Pagination/Pagination";
 import PaginationAdvance from "../PaginationAdvance/PaginationAdvance";
-
+import LinearProgress from "@material-ui/core/LinearProgress";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import history from "../history";
 //const TypographyHeading = lazy(() => import("../TypographyHeading"));
 var clear; /*to clear timeInterval for fetchscore api*/
 class NewMatches extends React.Component {
   state = {
     currentPage: 1,
-    matchesPerPage: 2
+    matchesPerPage: 2,
+    liveScoreBtnClicked: {}
+  };
+
+  goToMatchDetails = (e, matchId) => {
+    console.log(matchId);
+    history.push(`/MatchDetails/${matchId}`);
   };
 
   onPageChanged = data => {
@@ -58,6 +66,8 @@ class NewMatches extends React.Component {
   };
 
   getLiveScore = matchId => {
+    debugger;
+    this.setState({ liveScoreBtnClicked: { value: true, matchId: matchId } });
     this.props.fetchScore(matchId);
     clearInterval(clear);
     clear = setInterval(() => {
@@ -133,7 +143,10 @@ class NewMatches extends React.Component {
       months[Number(temp_date[1]) - 1]
     } ${temp_date[0]}`;
   };
-
+  componentDidUpdate(prevProps) {
+    if (prevProps.newMatches.score != this.props.newMatches.score)
+      this.setState({ liveScoreBtnClicked: { value: false } });
+  }
   render() {
     const { newMatches } = this.props;
     const { matches } = newMatches;
@@ -171,10 +184,13 @@ class NewMatches extends React.Component {
                             component="h2"
                             value={match["team-1"] + " vs " + match["team-2"]}
                           />
-                          <Suspense fallback={<div>loading....</div>}>
+                          {
                             <TypographyHeading
                               align="center"
                               color="textSecondary"
+                              className={
+                                this.props.matchScore.score ? null : "hidden"
+                              }
                               gutterBottom
                               variant="h6"
                               component="p"
@@ -182,8 +198,19 @@ class NewMatches extends React.Component {
                                 match["unique_id"]
                               )}
                             />
-                          </Suspense>
-
+                          }{" "}
+                          {
+                            <LinearProgress
+                              color="primary"
+                              className={
+                                this.state.liveScoreBtnClicked.value &&
+                                this.state.liveScoreBtnClicked.matchId ==
+                                  match["unique_id"]
+                                  ? null
+                                  : "hidden"
+                              }
+                            />
+                          }
                           <TypographyHeading
                             align="center"
                             variant="body2"
@@ -193,7 +220,6 @@ class NewMatches extends React.Component {
                               match["toss_winner_team"]
                             )}
                           />
-
                           <TypographyHeading
                             align="center"
                             className={
@@ -221,7 +247,13 @@ class NewMatches extends React.Component {
                           >
                             Live Score
                           </Button>
-                          <Button size="small" color="primary">
+                          <Button
+                            onClick={e =>
+                              this.goToMatchDetails(e, match["unique_id"])
+                            }
+                            size="small"
+                            color="primary"
+                          >
                             Match Details
                           </Button>
                         </CardActions>
@@ -243,7 +275,7 @@ class NewMatches extends React.Component {
       return <Loader />;
     }
   }
-  componentDidMount() {
+  componentDidMount(previousProps) {
     this.props.fetchNewMatches();
   }
 }
@@ -256,7 +288,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchNewMatches, fetchScore, searchMatch }
-)(NewMatches);
+export default connect(mapStateToProps, {
+  fetchNewMatches,
+  fetchScore,
+  searchMatch
+})(NewMatches);

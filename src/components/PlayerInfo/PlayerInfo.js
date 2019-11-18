@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 const PlayerInfo = props => {
   const classes = useStyles();
-  console.log(props.PlayerInfo.imageURL);
+
   const { PlayerInfo } = props;
   return (
     <Card>

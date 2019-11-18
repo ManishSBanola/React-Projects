@@ -3,6 +3,10 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f3f3f3;
+  height: 100%;
+}
+html {
+  height: 100%;
 }
 body .hidden {
   display: none;
@@ -13,10 +17,16 @@ body .hidden {
   grid-gap: 5em;
 }
 .app-container.MuiPaper-elevation2 {
-  margin: 72px 0 0;
+  margin: 88px 0 0;
   padding: 20px 52px;
   border-radius: 0;
   box-shadow: none;
+}
+@media screen and (max-width: 768px) {
+  .app-container.MuiPaper-elevation2 {
+    margin: 60px 0 0;
+    padding: 10px;
+  }
 }
 #loader {
   text-align: center;

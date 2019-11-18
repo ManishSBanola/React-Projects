@@ -2,6 +2,7 @@ import NewMatches from "../NewMatches/NewMatches";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
+import debounce from "lodash/debounce";
 import {
   searchMatch,
   getPlayerByName,
@@ -14,6 +15,7 @@ import DesignDialog from "../Dialog/DesignDialog";
 
 class Search extends React.Component {
   setDialogState = () => {
+    debugger;
     this.setState({ openDialog: false });
   };
   state = {
@@ -33,13 +35,19 @@ class Search extends React.Component {
       this.props.searchMatch(event.target.value);
     }
   };
-  playerSearch = e => {
+  handleSearch = debounce(text => {
+    debugger;
     this.props.resetCallback();
-    this.props.getPlayerByName(e.target.value);
-    this.setState({
-      userInput: e.currentTarget.value
-    });
-  };
+    this.props.getPlayerByName(text);
+  }, 500);
+  // playerSearch = e => {
+  //   this.props.resetCallback();
+
+  //   this.props.getPlayerByName(e.target.value);
+  //   this.setState({
+  //     userInput: e.currentTarget.value
+  //   });
+  // };
   componentDidUpdate(previousProps) {
     const { playerName, playerInfo } = this.props.NewMatches;
     if (playerInfo != previousProps.NewMatches.playerInfo) {
@@ -125,7 +133,7 @@ class Search extends React.Component {
     if (showSuggestions && userInput) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul class="suggestions">
+          <ul className="suggestions">
             {filteredSuggestions.map((suggestion, index) => {
               let className;
 
@@ -165,7 +173,16 @@ class Search extends React.Component {
         <TextField
           value={this.resetInputValue(userInput, resetValue)}
           placeholder={SearchInputProps.placeholder}
-          onChange={enableAutoSuggest ? this.playerSearch : this.updateSearch}
+          onChange={
+            enableAutoSuggest
+              ? e => {
+                  this.setState({
+                    userInput: e.target.value
+                  });
+                  this.handleSearch(e.target.value);
+                }
+              : this.updateSearch
+          }
           id={SearchInputProps.id}
           label={SearchInputProps.label}
           margin="normal"
