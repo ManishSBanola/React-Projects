@@ -1,140 +1,145 @@
 @mixin grid {
-  display: grid;
-  align-items: center;
+    display: grid;
+    align-items: center;
 }
 
 header.app-header {
-  .input-search-type {
-    .MuiSelect-selectMenu {
-      padding: 18.5px 14px;
-    }
-  }
-  .menu {
-    display: none;
-  }
-
-  //  background: -webkit-linear-gradient(0deg, #1edcfb, #e50212, #c0069c);
-  .grid-switch {
-    @include grid;
-    grid-template-columns: 61px 0.4fr 1fr 61px;
-  }
-
-  .grid-header {
-    @include grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .list-header {
-    li {
-      justify-content: flex-end;
+    .input-search-type {
+        .MuiSelect-selectMenu {
+            padding: 18.5px 14.1px;
+        }
     }
 
-    @include grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 0.8rem;
-
-    a {
-      &:hover {
-        color: #fff;
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-
-      cursor: pointer;
-      color: #abadc7;
+    .menu {
+        display: none;
     }
 
-    .icon-align {
-      @include grid;
-      grid-template-columns: 0.2fr 1fr;
-      grid-gap: 0.4rem;
-      align-items: center;
+    //  background: -webkit-linear-gradient(0deg, #1edcfb, #e50212, #c0069c);
+    .grid-switch {
+        @include grid;
+        grid-template-columns: 61px 0.4fr 1fr 61px;
     }
-  }
+
+    .grid-header {
+        @include grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .list-header {
+        li {
+            justify-content: flex-end;
+        }
+
+        @include grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 0.8rem;
+
+        a {
+            &:hover {
+                color: #fff;
+                text-decoration: none;
+                transition: color 0.2s;
+            }
+
+            cursor: pointer;
+            color: #abadc7;
+        }
+
+        .icon-align {
+            @include grid;
+            grid-template-columns: 0.2fr 1fr;
+            grid-gap: 0.4rem;
+            align-items: center;
+        }
+    }
 }
 
 p,
 .app-header li {
-  &.h7 {
-    font-size: 1rem;
-  }
+    &.h7 {
+        font-size: 1rem;
+    }
 }
 
 .MuiPaper-root {
-  &.container-bg {
-    background-color: transparent;
-    box-shadow: none;
-    text-align: right;
-  }
+    &.container-bg {
+        background-color: transparent;
+        box-shadow: none;
+        text-align: right;
+    }
 }
 
 .input-search-type {
-  .MuiFormLabel-root,
-  .MuiSelect-selectMenu {
-    &.Mui-focused {
-      color: #abadc7;
+
+    .MuiFormLabel-root,
+    .MuiSelect-selectMenu {
+        &.Mui-focused {
+            color: #abadc7;
+        }
+
+        color: #abadc7;
     }
 
-    color: #abadc7;
-  }
-
-  .MuiFilledInput-underline {
-    &:before {
-      border-color: #abadc7;
+    .MuiFilledInput-underline {
+        &:before {
+            border-color: #abadc7;
+        }
     }
-  }
 
-  .MuiSelect-icon {
-    color: #abadc7;
-  }
+    .MuiSelect-icon {
+        color: #abadc7;
+    }
 }
 
 /*responsive header media queries */
 
 @media only screen and (max-width: 768px) {
-  header.app-header {
-    .menu {
-      display: block;
-    }
+    header.app-header {
+        .menu {
+            display: block;
+        }
 
-    //  background: -webkit-linear-gradient(0deg, #1edcfb, #e50212, #c0069c);
-    .grid-switch {
-      grid-template-columns: 61px 0.4fr 1fr 25px;
-    }
+        //  background: -webkit-linear-gradient(0deg, #1edcfb, #e50212, #c0069c);
+        .grid-switch {
+            grid-template-columns: 61px 0.4fr 1fr 25px;
+        }
 
-    .grid-header {
-      grid-template-columns: 1fr;
-    }
+        .grid-header {
+            grid-template-columns: 1fr;
+        }
 
-    .list-header {
-      li {
-        padding: 0;
-      }
+        .list-header {
+            li {
+                padding: 0;
+            }
 
-      grid-template-columns: 1fr;
+            grid-template-columns: 1fr;
+        }
     }
-  }
 }
 
 @media only screen and (max-width: 569px) {
-  header.app-header {
-    .grid-switch {
-      grid-template-columns: 61px 1.3fr 0.7fr 25px;
+    header.app-header {
+        .grid-switch {
+            grid-template-columns: 61px 1.3fr 0.7fr 25px;
+        }
     }
-  }
 }
 
 .item-enter {
-  opacity: 0;
+    opacity: 0;
 }
+
 .item-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
+    opacity: 1;
+    transition: opacity 500ms ease-in;
 }
+
 .item-exit {
-  opacity: 1;
+    opacity: 1;
 }
+
 .item-exit-active {
-  opacity: 0;
-  transition: opacity 500ms ease-in;
+    opacity: 0;
+    transition: opacity 500ms ease-in;
 }
