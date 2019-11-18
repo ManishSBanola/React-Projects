@@ -73,7 +73,6 @@ class DesignCard extends React.Component {
 }
 
 const mapStateToProps = state => {
-  debugger;
   console.log(state, "mapstatetoprops");
   return state;
 };
