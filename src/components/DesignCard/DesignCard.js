@@ -34,32 +34,30 @@ class DesignCard extends React.Component {
       <>
         {players.map(player => {
           return (
-            <>
-              <Card className="card-players">
-                <CardActionArea>
-                  <CardContent>
-                    <Typography
-                      align="center"
-                      className="font-sm"
-                      gutterBottom
-                      variant="h6"
-                      component="h6"
-                    >
-                      {player.name}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Button
-                    onClick={e => this.showDialogPlayerStats(e, player.pid)}
-                    size="small"
-                    color="primary"
+            <Card key={player.pid} className="card-players">
+              <CardActionArea>
+                <CardContent>
+                  <Typography
+                    align="center"
+                    className="font-sm"
+                    gutterBottom
+                    variant="h6"
+                    component="h6"
                   >
-                    View Stats
-                  </Button>
-                </CardActions>
-              </Card>
-            </>
+                    {player.name}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardActions>
+                <Button
+                  onClick={e => this.showDialogPlayerStats(e, player.pid)}
+                  size="small"
+                  color="primary"
+                >
+                  View Stats
+                </Button>
+              </CardActions>
+            </Card>
           );
         })}
         <DesignDialog
@@ -73,7 +71,6 @@ class DesignCard extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state, "mapstatetoprops");
   return state;
 };
 export default connect(mapStateToProps, { fetchPlayerInfo })(DesignCard);

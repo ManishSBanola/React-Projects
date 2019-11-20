@@ -14,7 +14,7 @@ class MatchDetails extends React.Component {
         <div className="grid-players">
           {MatchDetails.data.team.map(team => {
             return (
-              <div>
+              <div key={team.name}>
                 <Typography gutterBottom variant="h5" component="h2">
                   {team.name}
                 </Typography>
