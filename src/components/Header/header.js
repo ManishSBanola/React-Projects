@@ -23,26 +23,63 @@ import Select from "@material-ui/core/Select";
 import MenuIcon from "@material-ui/icons/Menu";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { alterSearchType } from "../../Actions/index";
+import history from "../history";
 
 const Header = props => {
   const matches = useMediaQuery("(min-width:768px)");
-  console.log(matches, "matches");
-  const [searchType, setSearchType] = useState("team");
-  const [enableAutoSuggest, setEnableAutoSuggest] = useState(false);
+  debugger;
+  console.log({ matches });
+  const { hideSearchMenu } = props;
+
+  const searchField =
+    typeof hideSearchMenu == "object"
+      ? window.location.pathname == "/"
+        ? "team"
+        : "player"
+      : hideSearchMenu
+      ? "team"
+      : "player";
+
+  const [searchType, setSearchType] = useState(searchField);
   const [searchValue, setSearchValue] = useState(null);
-  const [toggleHeaderList, setToggleHeaderList] = useState(matches);
+  const [toggleHeaderList, setToggleHeaderList] = useState(false);
+  const [enableAutoSuggest, setEnableAutoSuggest] = useState(
+    !(window.location.pathname == "/")
+  );
+
+  useEffect(() => {
+    setSearchType(searchField);
+    setSearchValue("");
+    setEnableAutoSuggest(!(window.location.pathname == "/"));
+  }, [hideSearchMenu]);
+
+  useEffect(() => {
+    setToggleHeaderList(matches);
+  }, [matches]);
 
   const toggleHeader = () => {
-    console.log("code");
     setToggleHeaderList(!toggleHeaderList);
   };
+
   const resetSearchValue = () => {
     setSearchValue(null);
   };
+
+  useEffect(() => {
+    if (
+      document.querySelector(".list-header") &&
+      window.location.pathname != "/"
+    ) {
+      let listHeader = document.querySelector(".list-header");
+      listHeader.classList.add("grid-header-list-match-details");
+      listHeader.classList.remove("list-header");
+    }
+  }, [toggleHeaderList]);
+
   const toggleSearch = e => {
     setSearchType(e.target.value == 1 ? "team" : "player");
     setSearchValue("");
-
     if (!(e.target.value == 1)) {
       setEnableAutoSuggest(true);
     } else {
@@ -62,7 +99,14 @@ const Header = props => {
     props.toggleDarkMode(
       window.localStorage.getItem("theme") == "dark" ? true : false
     );
-  });
+    props.alterSearchType(window.location.pathname == "/");
+    debugger;
+    if (window.location.pathname != "/") {
+      let gridHeader = document.querySelector(" .grid-header");
+      gridHeader.classList.add("grid-header-match-details");
+      gridHeader.classList.remove("grid-header");
+    }
+  }, []);
 
   const SearchInputProps = [
     {
@@ -76,10 +120,30 @@ const Header = props => {
       }
     }
   ];
-
+  const toggleShowSelect = showMenu => {
+    if (showMenu) {
+      return (
+        <ListItem>
+          <FormControl variant="filled" className="input-search-type" fullWidth>
+            <Select
+              labelId="select-search-type"
+              id="select-search-type"
+              value={searchType == "team" ? 1 : 2}
+              onChange={toggleSearch}
+            >
+              <MenuItem value={1}> Team Search</MenuItem>
+              <MenuItem value={2}> Player Search</MenuItem>
+            </Select>
+          </FormControl>
+        </ListItem>
+      );
+    } else {
+      return null;
+    }
+  };
   return (
     <AppBar className="app-header">
-      <ToolBar className="grid-header">
+      <ToolBar id="grid-header" className="grid-header">
         <div className="grid-switch">
           <img alt="cricket ball icon" src={SvgCricketBall}></img>
           <Typography variant="h5">Cricket Plus</Typography>
@@ -91,26 +155,11 @@ const Header = props => {
           <MenuIcon className="menu" onClick={toggleHeader} />
         </div>
         <TransitionGroup>
-          {toggleHeaderList || matches ? (
+          {toggleHeaderList ? (
             <CSSTransition timeout={300} classNames="item">
               <List className="list-header" id="list-header">
-                <ListItem>
-                  <FormControl
-                    variant="filled"
-                    className="input-search-type"
-                    fullWidth
-                  >
-                    <Select
-                      labelId="select-search-type"
-                      id="select-search-type"
-                      value={searchType == "team" ? 1 : 2}
-                      onChange={toggleSearch}
-                    >
-                      <MenuItem value={1}> Team Search</MenuItem>
-                      <MenuItem value={2}> Player Search</MenuItem>
-                    </Select>
-                  </FormControl>
-                </ListItem>
+                {toggleShowSelect(props.hideSearchMenu)}
+
                 <Paper className="container-bg">
                   <Search
                     SearchInputProps={
@@ -120,7 +169,7 @@ const Header = props => {
                     }
                     resetValue={searchValue}
                     resetCallback={resetSearchValue}
-                    searchType={searchType}
+                    // searchType={searchType}
                     enableAutoSuggest={enableAutoSuggest}
                   />
                 </Paper>
@@ -134,7 +183,8 @@ const Header = props => {
 };
 
 const mapStateToProps = state => {
-  console.log(state.NewMatches);
-  return { darkMode: state.NewMatches.dark };
+  return { darkMode: state.NewMatches.dark, hideSearchMenu: state.searchType };
 };
-export default connect(mapStateToProps, { toggleDarkMode })(Header);
+export default connect(mapStateToProps, { toggleDarkMode, alterSearchType })(
+  Header
+);

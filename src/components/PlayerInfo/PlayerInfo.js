@@ -27,45 +27,43 @@ const PlayerInfo = props => {
   const { PlayerInfo } = props;
   return (
     <Card>
-      <CardActionArea>
-        <CardMedia
-          className={classes.image}
-          component="img"
-          alt="Player photo cant load"
-          height="140"
-          width="auto"
-          image={PlayerInfo.imageURL}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography align="center" gutterBottom variant="h5" component="h2">
-            {PlayerInfo.fullName}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {PlayerInfo.profile}
-          </Typography>
-          <Typography
-            className={classes.labelMargin}
-            align="left"
-            gutterBottom
-            variant="h6"
-            component="h2"
-          >
-            Batting Performance
-          </Typography>
-          <TableDesign size="small" data={PlayerInfo.data.batting} />
-          <Typography
-            className={classes.labelMargin}
-            align="left"
-            gutterBottom
-            variant="h6"
-            component="h2"
-          >
-            Bowling Performance
-          </Typography>
-          <TableDesign size="small" data={PlayerInfo.data.bowling} />
-        </CardContent>
-      </CardActionArea>
+      <CardMedia
+        className={classes.image}
+        component="img"
+        alt="Player photo cant load"
+        height="140"
+        width="auto"
+        image={PlayerInfo.imageURL}
+        title="Contemplative Reptile"
+      />
+      <CardContent>
+        <Typography align="center" gutterBottom variant="h5" component="h2">
+          {PlayerInfo.fullName}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {PlayerInfo.profile}
+        </Typography>
+        <Typography
+          className={classes.labelMargin}
+          align="left"
+          gutterBottom
+          variant="h6"
+          component="h2"
+        >
+          Batting Performance
+        </Typography>
+        <TableDesign size="small" data={PlayerInfo.data.batting} />
+        <Typography
+          className={classes.labelMargin}
+          align="left"
+          gutterBottom
+          variant="h6"
+          component="h2"
+        >
+          Bowling Performance
+        </Typography>
+        <TableDesign size="small" data={PlayerInfo.data.bowling} />
+      </CardContent>
     </Card>
   );
 };

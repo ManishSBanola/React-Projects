@@ -16,10 +16,9 @@ export default function DesignDialog(props) {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
 
-  const handleClickOpen = scrollType => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
+  // const handleClickOpen = scrollType => () => {
+  //   setOpen(true);
+  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -29,11 +28,11 @@ export default function DesignDialog(props) {
   return (
     <>
       <Dialog
-        open={open}
+        open={props.openDialog}
         onClose={handleClose}
-        scroll={scroll}
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description"
+        // scroll={scroll}
+        // aria-labelledby="scroll-dialog-title"
+        // aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">Player Stats</DialogTitle>
         <DialogContent dividers={scroll === "paper"}>

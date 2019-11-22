@@ -5,6 +5,7 @@ import DesignCard from "../DesignCard/DesignCard";
 import Typography from "@material-ui/core/Typography";
 import Loader from "../loader";
 import "./MatchDetails.scss";
+import { alterSearchType } from "../../Actions/index";
 class MatchDetails extends React.Component {
   render() {
     console.log(this.props.MatchDetails);
@@ -32,14 +33,17 @@ class MatchDetails extends React.Component {
   }
 
   componentDidMount() {
+    debugger;
     console.log(this.props);
     this.props.fetchMatchDetails(this.props.match.params.id);
+    this.props.alterSearchType(window.location.pathname == "/");
   }
 }
 
 const mapStateToProps = state => {
-  debugger;
   return { MatchDetails: state.MatchDetails };
 };
 
-export default connect(mapStateToProps, { fetchMatchDetails })(MatchDetails);
+export default connect(mapStateToProps, { fetchMatchDetails, alterSearchType })(
+  MatchDetails
+);

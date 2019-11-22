@@ -38,6 +38,7 @@ input.MuiOutlinedInput-input {
   padding-left: 0;
   width: calc(201px + 1rem);
   position: absolute;
+  background-color: #fff;
 }
 .suggestions li {
   text-align: left;

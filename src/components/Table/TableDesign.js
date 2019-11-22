@@ -23,10 +23,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getKeys = props => {
-  return Object.keys(props.data.firstClass);
+  let checkData = Object.entries(props.data).length > 0;
+  if (checkData) {
+    return Object.keys(props.data[Object.keys(props.data)[0]]);
+  }
+  return null;
 };
 const getHeader = props => {
   var keys = getKeys(props);
+  if (!keys) {
+    return;
+  }
   keys.unshift("League");
   return keys.map((key, index) => {
     return (

@@ -4,6 +4,21 @@
 }
 
 header.app-header {
+
+
+    .grid-header-list-match-details {
+        @include grid;
+        grid-template-columns: repeat(1, 1fr);
+
+
+        grid-gap: 0.8rem;
+    }
+
+    .grid-header-match-details {
+        @include grid;
+        grid-template-columns: 5fr 1fr;
+    }
+
     .input-search-type {
         .MuiSelect-selectMenu {
             padding: 18.5px 14.1px;
@@ -107,6 +122,21 @@ p,
         .grid-header {
             grid-template-columns: 1fr;
         }
+
+
+        .grid-header-list-match-details {
+
+            grid-template-columns: 1fr;
+
+
+
+        }
+
+        .grid-header-match-details {
+            @include grid;
+            grid-template-columns: 1fr;
+        }
+
 
         .list-header {
             li {

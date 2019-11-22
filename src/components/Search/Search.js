@@ -14,6 +14,7 @@ import history from "../history";
 import DesignDialog from "../Dialog/DesignDialog";
 
 class Search extends React.Component {
+  debugger;
   setDialogState = () => {
     debugger;
     this.setState({ openDialog: false });
@@ -27,27 +28,21 @@ class Search extends React.Component {
   };
 
   updateSearch = event => {
+    debugger;
     this.setState({
       userInput: null
     });
     this.props.resetCallback();
-    if (this.props.searchType == "team") {
-      this.props.searchMatch(event.target.value);
-    }
+    // if (this.props.searchType == "team") {
+    this.props.searchMatch(event.target.value);
+    // }
   };
   handleSearch = debounce(text => {
     debugger;
     this.props.resetCallback();
     this.props.getPlayerByName(text);
   }, 500);
-  // playerSearch = e => {
-  //   this.props.resetCallback();
 
-  //   this.props.getPlayerByName(e.target.value);
-  //   this.setState({
-  //     userInput: e.currentTarget.value
-  //   });
-  // };
   componentDidUpdate(previousProps) {
     const { playerName, playerInfo } = this.props.NewMatches;
     if (playerInfo != previousProps.NewMatches.playerInfo) {
@@ -107,7 +102,7 @@ class Search extends React.Component {
       this.setState({ activeSuggestionIndex: activeSuggestionIndex + 1 });
     }
   };
-  resetInputValue = (userInput, emptyVal) => {
+  calculateInputValue = (userInput, emptyVal) => {
     if (emptyVal == "") {
       return "";
     } else if (userInput && emptyVal == null) {
@@ -163,7 +158,7 @@ class Search extends React.Component {
       }
     }
 
-    const isTeamSearch = this.props.searchType == "team";
+    // const isTeamSearch = this.props.searchType == "team";
 
     const { SearchInputProps, enableAutoSuggest, resetValue } = this.props;
     const { playerInfo } = this.props.NewMatches;
@@ -171,7 +166,10 @@ class Search extends React.Component {
     return (
       <React.Fragment>
         <TextField
-          value={this.resetInputValue(userInput, resetValue)}
+          inputProps={{
+            maxLength: 30
+          }}
+          value={this.calculateInputValue(userInput, resetValue)}
           placeholder={SearchInputProps.placeholder}
           onChange={
             enableAutoSuggest

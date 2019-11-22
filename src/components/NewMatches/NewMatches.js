@@ -19,6 +19,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import history from "../history";
 import NoDataFound from "../NoDataFound";
+import { alterSearchType } from "../../Actions/index";
 //const TypographyHeading = lazy(() => import("../TypographyHeading"));
 var clear; /*to clear timeInterval for fetchscore api*/
 class NewMatches extends React.Component {
@@ -47,7 +48,6 @@ class NewMatches extends React.Component {
   };
 
   onPageChanged = data => {
-    debugger;
     const { currentPage, totalPages, pageLimit } = data;
 
     this.firstIndex = (currentPage - 1) * pageLimit;
@@ -80,7 +80,6 @@ class NewMatches extends React.Component {
   };
 
   getLiveScore = matchId => {
-    debugger;
     this.setState({ liveScoreBtnClicked: { value: true, matchId: matchId } });
     this.props.fetchScore(matchId);
     clearInterval(clear);
@@ -176,7 +175,11 @@ class NewMatches extends React.Component {
       console.log(filteredTotalMatches);
 
       if (this.getFilteredMatches(filteredTotalMatches)) {
-        this.content = <NoDataFound message="No Results Found" />;
+        this.content = (
+          <NoDataFound
+            message={`No results found for ${this.props.searchKey}`}
+          />
+        );
         this.noResultsFound = true;
       } else {
         this.noResultsFound = false;
@@ -298,6 +301,7 @@ class NewMatches extends React.Component {
   }
   componentDidMount(previousProps) {
     this.props.fetchNewMatches();
+    this.props.alterSearchType(window.location.pathname == "/");
   }
 }
 
@@ -312,5 +316,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   fetchNewMatches,
   fetchScore,
-  searchMatch
+  searchMatch,
+  alterSearchType
 })(NewMatches);

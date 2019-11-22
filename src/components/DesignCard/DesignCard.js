@@ -15,18 +15,16 @@ class DesignCard extends React.Component {
     openDialog: false
   };
   showDialogPlayerStats = (e, pid) => {
-    debugger;
     this.props.fetchPlayerInfo(pid);
   };
 
   setDialogState = () => {
-    debugger;
     this.setState({ openDialog: false });
   };
 
   render() {
     const { players } = this.props;
-    debugger;
+
     //  if (this.props.NewMatches.hasOwnProperty("playerInfo")) {
     const { playerInfo } = this.props.NewMatches;
     //  }
@@ -35,19 +33,18 @@ class DesignCard extends React.Component {
         {players.map(player => {
           return (
             <Card key={player.pid} className="card-players">
-              <CardActionArea>
-                <CardContent>
-                  <Typography
-                    align="center"
-                    className="font-sm"
-                    gutterBottom
-                    variant="h6"
-                    component="h6"
-                  >
-                    {player.name}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
+              <CardContent>
+                <Typography
+                  align="center"
+                  className="font-sm"
+                  gutterBottom
+                  variant="h6"
+                  component="h6"
+                >
+                  {player.name}
+                </Typography>
+              </CardContent>
+
               <CardActions>
                 <Button
                   onClick={e => this.showDialogPlayerStats(e, player.pid)}

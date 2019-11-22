@@ -1,3 +1,14 @@
+header.app-header .grid-header-list-match-details {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 0.8rem;
+}
+header.app-header .grid-header-match-details {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 5fr 1fr;
+}
 header.app-header .input-search-type .MuiSelect-selectMenu {
   padding: 18.5px 14.1px;
 }
@@ -70,6 +81,14 @@ p.h7,
     grid-template-columns: 61px 0.4fr 1fr 25px;
   }
   header.app-header .grid-header {
+    grid-template-columns: 1fr;
+  }
+  header.app-header .grid-header-list-match-details {
+    grid-template-columns: 1fr;
+  }
+  header.app-header .grid-header-match-details {
+    display: grid;
+    align-items: center;
     grid-template-columns: 1fr;
   }
   header.app-header .list-header {
