@@ -28,8 +28,7 @@ import history from "../history";
 
 const Header = props => {
   const matches = useMediaQuery("(min-width:768px)");
-  debugger;
-  console.log({ matches });
+
   const { hideSearchMenu } = props;
 
   const searchField =
@@ -69,13 +68,32 @@ const Header = props => {
   useEffect(() => {
     if (
       document.querySelector(".list-header") &&
-      window.location.pathname != "/"
+      window.location.pathname != "/" &&
+      document.querySelector(" .grid-header") &&
+      document.querySelector(" .list-header")
     ) {
-      let listHeader = document.querySelector(".list-header");
+      var listHeader = document.querySelector(".list-header");
+      var gridHeader = document.querySelector(" .grid-header");
       listHeader.classList.add("grid-header-list-match-details");
       listHeader.classList.remove("list-header");
+
+      gridHeader.classList.add("grid-header-match-details");
+      gridHeader.classList.remove("grid-header");
+    } else if (
+      document.querySelector(".grid-header-list-match-details") &&
+      window.location.pathname == "/"
+    ) {
+      document
+        .querySelector(".grid-header-list-match-details")
+        .classList.add("list-header");
+      document
+        .querySelector(".grid-header-list-match-details")
+        .classList.remove("grid-header-list-match-details");
+      document
+        .querySelector(".grid-header-match-details")
+        .classList.add("grid-header");
     }
-  }, [toggleHeaderList]);
+  });
 
   const toggleSearch = e => {
     setSearchType(e.target.value == 1 ? "team" : "player");
@@ -100,12 +118,6 @@ const Header = props => {
       window.localStorage.getItem("theme") == "dark" ? true : false
     );
     props.alterSearchType(window.location.pathname == "/");
-    debugger;
-    if (window.location.pathname != "/") {
-      let gridHeader = document.querySelector(" .grid-header");
-      gridHeader.classList.add("grid-header-match-details");
-      gridHeader.classList.remove("grid-header");
-    }
   }, []);
 
   const SearchInputProps = [
@@ -122,6 +134,11 @@ const Header = props => {
   ];
   const toggleShowSelect = showMenu => {
     if (showMenu) {
+      if (window.location.pathname != "/") {
+        let gridHeader = document.querySelector(" .grid-header");
+        gridHeader.classList.add("grid-header-match-details");
+        gridHeader.classList.remove("grid-header");
+      }
       return (
         <ListItem>
           <FormControl variant="filled" className="input-search-type" fullWidth>

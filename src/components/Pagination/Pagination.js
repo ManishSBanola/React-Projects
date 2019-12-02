@@ -18,7 +18,6 @@ function Pagination({
 }) {
   const PaginationNumbers = [];
   const [selectValue, setSelectValue] = useState(5);
-  console.log(selectValue, "SELECT");
   for (var i = 1; i <= Math.ceil(totalMatches / matchesPerPage); i++) {
     PaginationNumbers.push(i);
   }

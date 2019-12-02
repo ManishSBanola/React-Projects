@@ -9,7 +9,8 @@ import {
   FETCH_PLAYER_NAME,
   FETCH_PLAYER_INFO,
   FETCH_MATCH_DETAILS,
-  SEARCH_TYPE
+  SEARCH_TYPE,
+  OPEN_MODAL
 } from "./types";
 import cricketApi from "../api";
 
@@ -73,5 +74,12 @@ export const alterSearchType = searchType => {
   return {
     type: SEARCH_TYPE,
     payload: searchType
+  };
+};
+
+export const setModalOpen = data => {
+  return {
+    type: OPEN_MODAL,
+    payload: data
   };
 };

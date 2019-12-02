@@ -43,7 +43,6 @@ class NewMatches extends React.Component {
     return flag;
   };
   goToMatchDetails = (e, matchId) => {
-    console.log(matchId);
     history.push(`/MatchDetails/${matchId}`);
   };
 
@@ -168,11 +167,10 @@ class NewMatches extends React.Component {
       const lastMatchIndex = this.state.currentPage * this.state.matchesPerPage;
       const firstMatchIndex = lastMatchIndex - this.state.matchesPerPage;
       const totalMatches = this.groupMatchesByDate(this.props);
-      console.log(totalMatches);
+
       const filteredTotalMatches = totalMatches.filter(
         ({ games }) => games && games.length
       );
-      console.log(filteredTotalMatches);
 
       if (this.getFilteredMatches(filteredTotalMatches)) {
         this.content = (

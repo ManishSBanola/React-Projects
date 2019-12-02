@@ -6,13 +6,20 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PlayerInfo from "../PlayerInfo/PlayerInfo";
-export default function DesignDialog(props) {
-  console.log(props.openDialog, "open dialog");
-  useEffect(() => {
-    setOpen(props.openDialog);
-  }, [props.openDialog]);
+import { connect } from "react-redux";
 
-  console.log(props);
+const DesignDialog = props => {
+  // useEffect(() => {
+  //   debugger;
+  //   setOpen(props.openDialog);
+  // }, [props.openDialog]);
+
+  useEffect(() => {
+    debugger;
+    let hasData = Object.entries(props.ModalOpen).length > 0;
+    setOpen(hasData);
+  }, [props.ModalOpen]);
+
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
 
@@ -21,31 +28,31 @@ export default function DesignDialog(props) {
   // };
 
   const handleClose = () => {
+    debugger;
     setOpen(false);
-    props.updateParentDialogState();
   };
 
   return (
-    <>
-      <Dialog
-        open={props.openDialog}
-        onClose={handleClose}
-        // scroll={scroll}
-        // aria-labelledby="scroll-dialog-title"
-        // aria-describedby="scroll-dialog-description"
-      >
-        <DialogTitle id="scroll-dialog-title">Player Stats</DialogTitle>
-        <DialogContent dividers={scroll === "paper"}>
-          <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
-            {<PlayerInfo PlayerInfo={props.playerInfo} />}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle id="scroll-dialog-title">Player Stats</DialogTitle>
+      <DialogContent dividers={scroll === "paper"}>
+        <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
+          {<PlayerInfo PlayerInfo={props.ModalOpen} />}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
-}
+};
+
+const mapStateToProps = state => {
+  debugger;
+  console.log(state);
+  return state;
+};
+
+export default connect(mapStateToProps)(DesignDialog);

@@ -8,7 +8,6 @@ import "./MatchDetails.scss";
 import { alterSearchType } from "../../Actions/index";
 class MatchDetails extends React.Component {
   render() {
-    console.log(this.props.MatchDetails);
     const { MatchDetails } = this.props;
     if (MatchDetails.data) {
       return (
@@ -20,7 +19,7 @@ class MatchDetails extends React.Component {
                   {team.name}
                 </Typography>
                 <div className="grid-player">
-                  <DesignCard players={team.players}>MatchDetails</DesignCard>
+                  <DesignCard players={team.players} />
                 </div>
               </div>
             );
@@ -33,8 +32,6 @@ class MatchDetails extends React.Component {
   }
 
   componentDidMount() {
-    debugger;
-    console.log(this.props);
     this.props.fetchMatchDetails(this.props.match.params.id);
     this.props.alterSearchType(window.location.pathname == "/");
   }

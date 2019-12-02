@@ -6,17 +6,15 @@ import debounce from "lodash/debounce";
 import {
   searchMatch,
   getPlayerByName,
-  fetchPlayerInfo
+  fetchPlayerInfo,
+  setModalOpen
 } from "../../Actions/index";
 import "./Search.scss";
 import { Link } from "react-router-dom";
 import history from "../history";
 import DesignDialog from "../Dialog/DesignDialog";
-
 class Search extends React.Component {
-  debugger;
   setDialogState = () => {
-    debugger;
     this.setState({ openDialog: false });
   };
   state = {
@@ -24,11 +22,10 @@ class Search extends React.Component {
     filteredSuggestions: [],
     showSuggestions: false,
     userInput: "",
-    openDialog: false
+    openDialog: false,
+    searchListClicked: false
   };
-
   updateSearch = event => {
-    debugger;
     this.setState({
       userInput: null
     });
@@ -38,24 +35,65 @@ class Search extends React.Component {
     // }
   };
   handleSearch = debounce(text => {
-    debugger;
     this.props.resetCallback();
     this.props.getPlayerByName(text);
   }, 500);
+handleResize=()=>{
+  if(this.props.enableAutoSuggest && document.getElementById('player-search') && document.getElementById('suggestions')){
 
-  componentDidUpdate(previousProps) {
+    let inputWidth=document.getElementById('player-search').offsetWidth;
+    document.getElementsByClassName('suggestions')[0].style=`width:${inputWidth}px`
+   
+   }
+}
+ componentDidMount(){
+   let resizeTimer;
+   clearTimeout(resizeTimer);
+   resizeTimer=setTimeout(()=>{
+    window.addEventListener('resize',this.handleResize)
+   },500);
+   
+ }
+ componentWillUnmount(){
+   window.removeEventListener('resize',this.handleResize)
+ }
+  componentDidUpdate(prevProps, prevState) {
+    Object.entries(this.props).forEach(
+      ([key, val]) =>
+        prevProps[key] !== val && console.log(`Prop '${key}' changed`)
+    );
+    if (this.state) {
+      Object.entries(this.state).forEach(
+        ([key, val]) =>
+          prevState[key] !== val && console.log(`State '${key}' changed`)
+      );
+    }
+    debugger;
+if(this.props.enableAutoSuggest && document.getElementById('player-search') && document.getElementById('suggestions')){
+
+ let inputWidth=document.getElementById('player-search').offsetWidth;
+ document.getElementsByClassName('suggestions')[0].style=`width:${inputWidth}px`
+
+}
+ 
     const { playerName, playerInfo } = this.props.NewMatches;
-    if (playerInfo != previousProps.NewMatches.playerInfo) {
-      this.setState({
-        openDialog: true
-      });
+    console.log(this.props, "props");
+
+    if (
+      playerInfo &&
+      playerInfo.pid !=
+        (prevProps.NewMatches.playerInfo
+          ? prevProps.NewMatches.playerInfo.pid
+          : undefined)
+    ) {
+      this.props.setModalOpen(playerInfo);
     }
     if (playerName) {
       var filteredSuggestions = playerName.map(player => {
         return { pid: player.pid, playerName: player.name };
       });
     }
-    if (playerName != previousProps.NewMatches.playerName) {
+    if (playerName != prevProps.NewMatches.playerName) {
       this.setState({
         activeSuggestionIndex: 0,
         filteredSuggestions,
@@ -68,15 +106,13 @@ class Search extends React.Component {
       activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
-      userInput: e.currentTarget.innerText
+      userInput: e.currentTarget.innerText,
+      searchListClicked: true
     });
-
     this.props.fetchPlayerInfo(pid);
   };
-
   onKeyDown = e => {
     const { activeSuggestionIndex, filteredSuggestions } = this.state;
-
     // User pressed the enter key
     if (e.keyCode === 13) {
       this.setState({
@@ -90,7 +126,6 @@ class Search extends React.Component {
       if (activeSuggestionIndex === 0) {
         return;
       }
-
       this.setState({ activeSuggestionIndex: activeSuggestionIndex - 1 });
     }
     // User pressed the down arrow
@@ -98,7 +133,6 @@ class Search extends React.Component {
       if (activeSuggestionIndex - 1 === filteredSuggestions.length) {
         return;
       }
-
       this.setState({ activeSuggestionIndex: activeSuggestionIndex + 1 });
     }
   };
@@ -112,7 +146,6 @@ class Search extends React.Component {
     }
   };
   render() {
-    console.log(this.props, "props");
     const {
       onChange,
       onClick,
@@ -128,15 +161,13 @@ class Search extends React.Component {
     if (showSuggestions && userInput) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul className="suggestions">
+          <ul className="suggestions" id="suggestions">
             {filteredSuggestions.map((suggestion, index) => {
               let className;
-
               // Flag the active suggestion with a class
               if (index === activeSuggestionIndex) {
                 className = "suggestion-active";
               }
-
               return (
                 <li
                   className={className}
@@ -157,12 +188,9 @@ class Search extends React.Component {
         );
       }
     }
-
     // const isTeamSearch = this.props.searchType == "team";
-
     const { SearchInputProps, enableAutoSuggest, resetValue } = this.props;
     const { playerInfo } = this.props.NewMatches;
-
     return (
       <React.Fragment>
         <TextField
@@ -188,11 +216,6 @@ class Search extends React.Component {
           autoComplete="off"
         />
         {enableAutoSuggest ? suggestionsListComponent : null}
-        <DesignDialog
-          openDialog={this.state.openDialog}
-          playerInfo={playerInfo}
-          updateParentDialogState={this.setDialogState}
-        />
       </React.Fragment>
     );
   }
@@ -200,9 +223,9 @@ class Search extends React.Component {
 const mapStateToProps = state => {
   return state;
 };
-
 export default connect(mapStateToProps, {
   searchMatch,
   getPlayerByName,
-  fetchPlayerInfo
+  fetchPlayerInfo,
+  setModalOpen
 })(Search);

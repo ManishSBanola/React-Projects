@@ -15,6 +15,7 @@ import {
   ThemeProvider
 } from "@material-ui/core/styles";
 import grey from "@material-ui/core/colors/grey";
+import DesignDialog from "./Dialog/DesignDialog";
 
 const theme = createMuiTheme({
   overrides: {
@@ -48,7 +49,6 @@ const theme = createMuiTheme({
 });
 
 const App = props => {
-  console.log(theme, "theme");
   return (
     <ThemeProvider theme={props.darkMode ? theme : null}>
       <CssBaseline />
@@ -58,6 +58,7 @@ const App = props => {
           <Paper elevation="2" className="app-container">
             <Route path="/" exact component={NewMatches} />
             <Route path="/MatchDetails/:id" exact component={MatchDetails} />
+            <DesignDialog />
           </Paper>
         </Router>
       </div>

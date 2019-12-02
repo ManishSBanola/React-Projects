@@ -32,7 +32,7 @@ header.app-header {
     //  background: -webkit-linear-gradient(0deg, #1edcfb, #e50212, #c0069c);
     .grid-switch {
         @include grid;
-        grid-template-columns: 61px 0.4fr 1fr 61px;
+        grid-template-columns: 61px 0.5fr 1fr 61px;
     }
 
     .grid-header {
@@ -127,8 +127,6 @@ p,
         .grid-header-list-match-details {
 
             grid-template-columns: 1fr;
-
-
 
         }
 

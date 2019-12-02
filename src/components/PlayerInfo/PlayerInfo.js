@@ -22,9 +22,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PlayerInfo = props => {
+  debugger;
   const classes = useStyles();
 
   const { PlayerInfo } = props;
+
   return (
     <Card>
       <CardMedia
@@ -34,7 +36,6 @@ const PlayerInfo = props => {
         height="140"
         width="auto"
         image={PlayerInfo.imageURL}
-        title="Contemplative Reptile"
       />
       <CardContent>
         <Typography align="center" gutterBottom variant="h5" component="h2">

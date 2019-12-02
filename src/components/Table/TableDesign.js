@@ -57,8 +57,6 @@ const getRowsData = data => {
 };
 const TableDesign = props => {
   const classes = useStyles();
-
-  console.log(props, "table design");
   const { size } = props;
 
   return (
