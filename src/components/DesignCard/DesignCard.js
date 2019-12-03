@@ -23,14 +23,14 @@ class DesignCard extends React.Component {
     debugger;
     this.setState({ openDialogDesign: false });
   };
-// componentDidMount(){
-//     debugger;
-//     var el=document.getElementsByClassName('grid-player');
-// if(el){
-// el[0].innerHTML = el[0].innerHTML.replace(/&nbsp;/g,'');
-// el[1].innerHTML = el[1].innerHTML.replace(/&nbsp;/g,'');
-// }
-// }
+  // componentDidMount(){
+  //     debugger;
+  //     var el=document.getElementsByClassName('grid-player');
+  // if(el){
+  // el[0].innerHTML = el[0].innerHTML.replace(/&nbsp;/g,'');
+  // el[1].innerHTML = el[1].innerHTML.replace(/&nbsp;/g,'');
+  // }
+  // }
   componentDidUpdate(prevProps, prevState) {
     Object.entries(this.props).forEach(
       ([key, val]) =>
@@ -66,32 +66,43 @@ class DesignCard extends React.Component {
     const { playerInfo } = this.props.NewMatches;
 
     return (
-      <>       
+      <>
+               
         {players.map(player => {
           return (
-            <Card key={player.pid} className="card-players">                           
-              <CardContent>              
+            <Card key={player.pid} className="card-players">
+              {" "}
+                           
+              <CardContent>
+                {" "}
+                             
                 <Typography
                   align="center"
-                  
                   className="font-sm"
                   gutterBottom
                   variant="h6"
                   component="h6"
-                >{player.name}               
+                >
+                  {player.name}               
                 </Typography>
               </CardContent>
-              <CardActions>              
+              <CardActions>
+                {" "}
+                             
                 <Button
                   onClick={e => this.showDialogPlayerStats(e, player.pid)}
                   size="small"
                   color="primary"
-                >View Stats                
-                </Button>                            
-              </CardActions>              
+                >
+                  View Stats                
+                </Button>{" "}
+                           
+              </CardActions>{" "}
+                         
             </Card>
           );
-        })}             
+        })}{" "}
+             
       </>
     );
   }

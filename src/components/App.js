@@ -6,7 +6,7 @@ import NewMatches from "./NewMatches/NewMatches";
 import MatchDetails from "./MatchDetails/MatchDetails";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import "././App.scss";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import {
