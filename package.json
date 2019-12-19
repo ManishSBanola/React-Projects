@@ -73,6 +73,7 @@
     "file-loader": "^5.0.2",
     "image-webpack-loader": "^6.0.0",
     "node-sass": "^4.13.0",
-    "sass-loader": "^8.0.0"
+    "sass-loader": "^8.0.0",
+    "terser": "^3.14.1"
   }
 }
