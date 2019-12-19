@@ -3,6 +3,30 @@
   grid-template-columns: repeat(1, 1fr);
   grid-gap: 12px;
 }
+.parent-score-card:not(:first-child) {
+  margin-top: 5em;
+}
+@supports (display: flex) {
+  .parent-score-card:not(:first-child) {
+    margin-top: 0;
+  }
+}
 .MuiCardActions-root {
   justify-content: center;
+}
+.parent-score-card > *:not(:first-child) {
+  margin-top: 12px;
+}
+@supports (display: flex) {
+  .parent-score-card > *:not(:first-child) {
+    margin-top: 0;
+  }
+}
+.match-grid-container nav {
+  margin-top: 5em;
+}
+@supports (display: flex) {
+  .match-grid-container nav {
+    margin-top: 0;
+  }
 }

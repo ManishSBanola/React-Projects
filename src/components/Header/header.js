@@ -58,6 +58,7 @@ const Header = props => {
   }, [matches]);
 
   const toggleHeader = () => {
+    debugger;
     setToggleHeaderList(!toggleHeaderList);
   };
 
@@ -171,7 +172,7 @@ const Header = props => {
           />
           <MenuIcon className="menu" onClick={toggleHeader} />
         </div>
-        <TransitionGroup>
+        <TransitionGroup className="list-container">
           {toggleHeaderList ? (
             <CSSTransition timeout={300} classNames="item">
               <List className="list-header" id="list-header">

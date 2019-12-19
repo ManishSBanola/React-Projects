@@ -4,50 +4,64 @@
 }
 
 header.app-header {
-
-
     .grid-header-list-match-details {
-        @include grid;
-        grid-template-columns: repeat(1, 1fr);
-
-
-        grid-gap: 0.8rem;
+        @supports (display: flex) {
+            @include grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-gap: 0.8rem;
+        }
     }
 
     .grid-header-match-details {
-        @include grid;
-        grid-template-columns: 5fr 1fr;
-    }
-
-    .input-search-type {
-        .MuiSelect-selectMenu {
-            padding: 18.5px 14.1px;
+        @supports (display: flex) {
+            @include grid;
+            grid-template-columns: 5fr 1fr;
         }
     }
 
-    .menu {
-        display: none;
+    .grid-switch {
+        display: flex;
+        flex: 1;
+        align-items: center;
+
+        @supports (display: flex) {
+            @include grid;
+            grid-template-columns: 61px 0.5fr 1fr 61px;
+        }
+
+        img {
+            max-height: 61px;
+        }
     }
 
-    //  background: -webkit-linear-gradient(0deg, #1edcfb, #e50212, #c0069c);
-    .grid-switch {
-        @include grid;
-        grid-template-columns: 61px 0.5fr 1fr 61px;
+    .list-container {
+        flex: 1;
     }
 
     .grid-header {
-        @include grid;
-        grid-template-columns: 1fr 1fr;
+        display: flex;
+
+        @supports (display: flex) {
+            @include grid;
+            grid-template-columns: 1fr 1fr;
+        }
     }
 
     .list-header {
+        display: flex;
+        align-items: center;
+
         li {
-            justify-content: flex-end;
+            @supports (display: flex) {
+                justify-content: flex-end;
+            }
         }
 
-        @include grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 0.8rem;
+        @supports (display: flex) {
+            @include grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 0.8rem;
+        }
 
         a {
             &:hover {
@@ -61,13 +75,26 @@ header.app-header {
         }
 
         .icon-align {
-            @include grid;
-            grid-template-columns: 0.2fr 1fr;
-            grid-gap: 0.4rem;
-            align-items: center;
+            @supports (display: flex) {
+                @include grid;
+                grid-template-columns: 0.2fr 1fr;
+                grid-gap: 0.4rem;
+                align-items: center;
+            }
         }
     }
+
+    .input-search-type {
+        .MuiSelect-selectMenu {
+            padding: 18.5px 14.1px;
+        }
+    }
+
+    .menu {
+        display: none;
+    }
 }
+
 
 p,
 .app-header li {
@@ -110,17 +137,40 @@ p,
 
 @media only screen and (max-width: 768px) {
     header.app-header {
+        .list-header {
+            flex-wrap: wrap;
+
+            .container-bg {
+                flex: 0 0 100%;
+            }
+        }
+
         .menu {
             display: block;
+            margin-left: auto;
+
+            @supports (display: grid) {
+                margin-left: 0;
+            }
         }
 
         //  background: -webkit-linear-gradient(0deg, #1edcfb, #e50212, #c0069c);
+
         .grid-switch {
-            grid-template-columns: 61px 0.4fr 1fr 25px;
+            flex-basis: 100%;
+
+            @supports (display: flex) {
+                grid-template-columns: 61px 0.4fr 1fr 25px;
+            }
+
         }
 
         .grid-header {
-            grid-template-columns: 1fr;
+            flex-wrap: wrap;
+
+            @supports (display: flex) {
+                grid-template-columns: 1fr;
+            }
         }
 
 
@@ -131,17 +181,27 @@ p,
         }
 
         .grid-header-match-details {
-            @include grid;
-            grid-template-columns: 1fr;
+            @supports (display: flex) {
+                @include grid;
+                grid-template-columns: 1fr;
+            }
         }
 
 
         .list-header {
+
             li {
                 padding: 0;
+                margin-bottom: 10px;
+
+                @supports (display: grid) {
+                    margin-bottom: 0;
+                }
             }
 
-            grid-template-columns: 1fr;
+            @supports (display: flex) {
+                grid-template-columns: 1fr;
+            }
         }
     }
 }
@@ -149,7 +209,11 @@ p,
 @media only screen and (max-width: 569px) {
     header.app-header {
         .grid-switch {
-            grid-template-columns: 61px 1.3fr 0.7fr 25px;
+            flex: 0 0 100%;
+
+            @supports (display: flex) {
+                grid-template-columns: 61px 1.3fr 0.7fr 25px;
+            }
         }
     }
 }

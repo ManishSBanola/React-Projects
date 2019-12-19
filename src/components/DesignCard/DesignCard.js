@@ -71,10 +71,8 @@ class DesignCard extends React.Component {
         {players.map(player => {
           return (
             <Card key={player.pid} className="card-players">
-              {" "}
                            
               <CardContent>
-                {" "}
                              
                 <Typography
                   align="center"
@@ -87,7 +85,6 @@ class DesignCard extends React.Component {
                 </Typography>
               </CardContent>
               <CardActions>
-                {" "}
                              
                 <Button
                   onClick={e => this.showDialogPlayerStats(e, player.pid)}
@@ -95,13 +92,13 @@ class DesignCard extends React.Component {
                   color="primary"
                 >
                   View Stats                
-                </Button>{" "}
+                </Button>
                            
-              </CardActions>{" "}
+              </CardActions>
                          
             </Card>
           );
-        })}{" "}
+        })}
              
       </>
     );

@@ -7,6 +7,9 @@ module.exports = {
     __dirname: false
   },
   devtool: "cheap-module-source-map",
+  devServer: {
+    historyApiFallback: true
+  },
   module: {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
