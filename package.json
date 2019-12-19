@@ -43,12 +43,15 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --open --port 4000 --compress --mode development",
-    "start": "node dist/main.js",
+    "start": "node server.js",
     "build": "webpack --mode production --progress",
     "postinstall": "webpack --mode production --progress"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "globals": {
+      "window": true
+    }
   },
   "browserslist": {
     "production": [
