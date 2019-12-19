@@ -45,7 +45,7 @@
     "dev": "webpack-dev-server --open --port 4000 --compress --mode development",
     "start": "node server.js",
     "build": "webpack --mode production --progress",
-    "postinstall": "webpack --mode production --progress"
+    "heroku-postbuild": "webpack -p"
   },
   "eslintConfig": {
     "extends": "react-app",
