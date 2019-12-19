@@ -16,10 +16,12 @@ const store = createStore(
 );
 // import(/*WebpackChunkName:'app' */ "./components/App").then(
 //   ({ default: App }) =>
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
-);
+if (typeof window !== "undefined") {
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById("root")
+  );
+}
 // );

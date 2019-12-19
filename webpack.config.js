@@ -3,6 +3,7 @@ console.log(__dirname);
 const webpack = require("webpack");
 const dotenv = require("dotenv").config({ path: __dirname + "/.env" });
 module.exports = {
+  target: "node",
   node: {
     __dirname: false
   },
