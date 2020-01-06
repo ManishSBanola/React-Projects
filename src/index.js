@@ -16,7 +16,7 @@ const store = createStore(
 );
 // import(/*WebpackChunkName:'app' */ "./components/App").then(
 //   ({ default: App }) =>
-if (typeof window !== "undefined") {
+if (typeof document !== "undefined") {
   ReactDOM.render(
     <Provider store={store}>
       <App />

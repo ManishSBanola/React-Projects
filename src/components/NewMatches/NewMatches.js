@@ -192,7 +192,7 @@ class NewMatches extends React.Component {
                 </Typography>
                 {this.searchTeamFilter(match).map(match => {
                   return (
-                    <Card key={match["unique_id"]}>
+                    <Card className="score-card" key={match["unique_id"]}>
                       <CardContent>
                         <TypographyHeading
                           align="center"

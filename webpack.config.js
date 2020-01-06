@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 console.log(__dirname);
+const path = require("path");
 const webpack = require("webpack");
 const dotenv = require("dotenv").config({ path: __dirname + "/.env" });
 module.exports = {
@@ -17,6 +18,7 @@ module.exports = {
         test: /bootstrap\/dist\/js\/umd\//,
         use: "imports-loader?jQuery=jquery"
       },
+      { test: /\.ejs$/, use: [{ loader: "ejs-loader?variable=data" }] },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader", "postcss-loader"]
