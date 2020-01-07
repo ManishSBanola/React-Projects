@@ -38,25 +38,28 @@ class Search extends React.Component {
     this.props.resetCallback();
     this.props.getPlayerByName(text);
   }, 500);
-handleResize=()=>{
-  if(this.props.enableAutoSuggest && document.getElementById('player-search') && document.getElementById('suggestions')){
-
-    let inputWidth=document.getElementById('player-search').offsetWidth;
-    document.getElementsByClassName('suggestions')[0].style=`width:${inputWidth}px`
-   
-   }
-}
- componentDidMount(){
-   let resizeTimer;
-   clearTimeout(resizeTimer);
-   resizeTimer=setTimeout(()=>{
-    window.addEventListener('resize',this.handleResize)
-   },500);
-   
- }
- componentWillUnmount(){
-   window.removeEventListener('resize',this.handleResize)
- }
+  handleResize = () => {
+    if (
+      this.props.enableAutoSuggest &&
+      document.getElementById("player-search") &&
+      document.getElementById("suggestions")
+    ) {
+      let inputWidth = document.getElementById("player-search").offsetWidth;
+      document.getElementsByClassName(
+        "suggestions"
+      )[0].style = `width:${inputWidth}px`;
+    }
+  };
+  componentDidMount() {
+    let resizeTimer;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      window.addEventListener("resize", this.handleResize);
+    }, 500);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
   componentDidUpdate(prevProps, prevState) {
     Object.entries(this.props).forEach(
       ([key, val]) =>
@@ -69,13 +72,17 @@ handleResize=()=>{
       );
     }
     debugger;
-if(this.props.enableAutoSuggest && document.getElementById('player-search') && document.getElementById('suggestions')){
+    if (
+      this.props.enableAutoSuggest &&
+      document.getElementById("player-search") &&
+      document.getElementById("suggestions")
+    ) {
+      let inputWidth = document.getElementById("player-search").offsetWidth;
+      document.getElementsByClassName(
+        "suggestions"
+      )[0].style = `width:${inputWidth}px`;
+    }
 
- let inputWidth=document.getElementById('player-search').offsetWidth;
- document.getElementsByClassName('suggestions')[0].style=`width:${inputWidth}px`
-
-}
- 
     const { playerName, playerInfo } = this.props.NewMatches;
     console.log(this.props, "props");
 
@@ -94,6 +101,7 @@ if(this.props.enableAutoSuggest && document.getElementById('player-search') && d
       });
     }
     if (playerName != prevProps.NewMatches.playerName) {
+      console.log("starts");
       this.setState({
         activeSuggestionIndex: 0,
         filteredSuggestions,

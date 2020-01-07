@@ -9,7 +9,6 @@ const NoResultsFound = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
 const NoDataFound = ({ message }) => {
   return (
     <NoResultsFound>
