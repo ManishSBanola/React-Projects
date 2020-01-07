@@ -5,7 +5,6 @@ const loader = () => {
   return ReactDOM.createPortal(
     <CircularProgress />,
     document.getElementById("loader")
-  );  
+  );
 };
-
 export default loader;

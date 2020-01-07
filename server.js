@@ -12,7 +12,7 @@ app.get(`*`, (req, res) => {
 
 // app.get("/health", (req, res) => {
 //   res.json({ message: `ok` });
-// });
+// })
 
 app.listen(port);
 console.log("server started");
