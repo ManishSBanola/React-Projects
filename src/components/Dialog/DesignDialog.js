@@ -9,11 +9,6 @@ import PlayerInfo from "../PlayerInfo/PlayerInfo";
 import { connect } from "react-redux";
 
 const DesignDialog = props => {
-  // useEffect(() => {
-  //   debugger;
-  //   setOpen(props.openDialog);
-  // }, [props.openDialog]);
-
   useEffect(() => {
     debugger;
     let hasData = Object.entries(props.ModalOpen).length > 0;

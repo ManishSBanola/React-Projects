@@ -7,7 +7,6 @@ module.exports = {
   node: {
     __dirname: false
   },
-  devtool: "cheap-module-source-map",
   devServer: {
     historyApiFallback: true
   },
@@ -18,7 +17,7 @@ module.exports = {
         test: /bootstrap\/dist\/js\/umd\//,
         use: "imports-loader?jQuery=jquery"
       },
-      { test: /\.ejs$/, use: [{ loader: "ejs-loader?variable=data" }] },
+
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader", "postcss-loader"]
@@ -49,10 +48,11 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
         exclude: /node_modules/,
-        use: ["file-loader"]
+        use: ["file-loader?name=[name].[ext]"]
       }
     ]
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html"

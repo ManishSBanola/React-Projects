@@ -13,7 +13,14 @@ import "./Search.scss";
 import { Link } from "react-router-dom";
 import history from "../history";
 import DesignDialog from "../Dialog/DesignDialog";
+import styled from "styled-components";
+import { toggleDarkMode } from "../../Actions/index";
+debugger;
+const AutoComplete = styled.li`
+  background-color: ${props => (props?.dark ? "#3f51b5" : "#fff")};
+`;
 class Search extends React.Component {
+  debugger;
   setDialogState = () => {
     this.setState({ openDialog: false });
   };
@@ -177,13 +184,14 @@ class Search extends React.Component {
                 className = "suggestion-active";
               }
               return (
-                <li
+                <AutoComplete
                   className={className}
                   key={suggestion.pid}
                   onClick={e => onClick(e, suggestion.pid)}
+                  dark={this.props.NewMatches.dark}
                 >
                   {suggestion.playerName}
-                </li>
+                </AutoComplete>
               );
             })}
           </ul>
@@ -235,5 +243,6 @@ export default connect(mapStateToProps, {
   searchMatch,
   getPlayerByName,
   fetchPlayerInfo,
-  setModalOpen
+  setModalOpen,
+  toggleDarkMode
 })(Search);
