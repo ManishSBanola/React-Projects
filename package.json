@@ -95,7 +95,7 @@
     "image-webpack-loader": "^6.0.0",
     "jest": "^24.9.0",
     "jest-enzyme": "^7.1.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "react-app-rewired": "^2.1.5",
     "sass-loader": "^8.0.0",
     "terser": "^3.14.1"
