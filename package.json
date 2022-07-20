@@ -98,6 +98,6 @@
     "node-sass": "^4.13.0",
     "react-app-rewired": "^2.1.5",
     "sass-loader": "^8.0.0",
-    "terser": "^3.14.1"
+    "terser": "^4.8.1"
   }
 }
